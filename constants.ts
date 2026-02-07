@@ -1,5 +1,5 @@
 
-import { Product } from './types';
+import { Product } from './types.ts';
 
 export const INITIAL_PRODUCTS: Product[] = [
   {
@@ -8,7 +8,6 @@ export const INITIAL_PRODUCTS: Product[] = [
     team: 'Mizoram FA',
     price: 1200,
     image: 'https://picsum.photos/seed/mizoram/600/800',
-    // Added images array to match Product interface requirements
     images: ['https://picsum.photos/seed/mizoram/600/800'],
     description: 'The official home jersey for the pride of Mizoram. Features moisture-wicking technology and premium embroidery.',
     stock: 50,
@@ -22,7 +21,6 @@ export const INITIAL_PRODUCTS: Product[] = [
     team: 'Aizawl FC',
     price: 1500,
     image: 'https://picsum.photos/seed/aizawlfc/600/800',
-    // Added images array to match Product interface requirements
     images: ['https://picsum.photos/seed/aizawlfc/600/800'],
     description: 'Official Aizawl FC home kit. Show your support for the People\'s Club.',
     stock: 30,
@@ -36,7 +34,6 @@ export const INITIAL_PRODUCTS: Product[] = [
     team: 'Real Madrid',
     price: 3500,
     image: 'https://picsum.photos/seed/madrid/600/800',
-    // Added images array to match Product interface requirements
     images: ['https://picsum.photos/seed/madrid/600/800'],
     description: 'Classic white Real Madrid jersey. Authentic player edition with premium fabric.',
     stock: 15,
@@ -50,7 +47,6 @@ export const INITIAL_PRODUCTS: Product[] = [
     team: 'Manchester City',
     price: 3200,
     image: 'https://picsum.photos/seed/mancity/600/800',
-    // Added images array to match Product interface requirements
     images: ['https://picsum.photos/seed/mancity/600/800'],
     description: 'Stylish away kit for the 2024 season. Built for performance and style.',
     stock: 20,

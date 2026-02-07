@@ -7,7 +7,6 @@
     <title>Jersey Apparel Mizoram</title>
     <script>
         // Polyfill process for browser environment to support Gemini SDK
-        // This must be at the very top of the head
         window.process = { env: { API_KEY: "" } };
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +18,6 @@
         .bg-jam-green { background-color: #064e3b; }
         .text-jam-green { color: #064e3b; }
         .border-jam-green { border-color: #064e3b; }
-        /* Hide root until React mounts to prevent flicker */
         #root:empty { display: none; }
     </style>
     <script type="importmap">
@@ -39,7 +37,6 @@
 </head>
 <body class="bg-gray-50 text-gray-900">
     <div id="root"></div>
-    <!-- Load entry point as a module -->
     <script type="module" src="./index.tsx"></script>
 <script type="module" src="/index.tsx"></script>
 </body>

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { User } from '../types';
+import { User } from '../types.ts';
 
 interface NavbarProps {
   user: User | null;
@@ -28,12 +28,10 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
     <nav className="bg-jam-green text-white sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo Section */}
           <div className="flex items-center cursor-pointer" onClick={() => handleMobileNav('home')}>
             <span className="text-xl font-bold tracking-tighter">JERSEY APPAREL MIZORAM</span>
           </div>
           
-          {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-1">
               <button onClick={() => onNavigate('home')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Home</button>
