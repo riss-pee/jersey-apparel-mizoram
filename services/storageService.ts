@@ -1,7 +1,7 @@
 
-import { supabase } from './supabaseClient';
-import { User, Product, Order, HeroSlide, SiteSettings, Review } from '../types';
-import { INITIAL_PRODUCTS } from '../constants';
+import { supabase } from './supabaseClient.ts';
+import { User, Product, Order, HeroSlide, SiteSettings, Review } from '../types.ts';
+import { INITIAL_PRODUCTS } from '../constants.ts';
 
 const mapOrderFromDB = (dbOrder: any): Order => {
   return {

@@ -1,20 +1,20 @@
 
 import React, { useState, useEffect } from 'react';
-import { User, Product, Order, OrderItem, HeroSlide, SiteSettings, Review } from './types';
-import { storageService } from './services/storageService';
-import { supabase } from './services/supabaseClient';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import UserDashboard from './pages/UserDashboard';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminProducts from './pages/AdminProducts';
-import AdminHero from './pages/AdminHero';
-import AdminSettings from './pages/AdminSettings';
-import ProductDetail from './pages/ProductDetail';
+import { User, Product, Order, OrderItem, HeroSlide, SiteSettings, Review } from './types.ts';
+import { storageService } from './services/storageService.ts';
+import { supabase } from './services/supabaseClient.ts';
+import Navbar from './components/Navbar.tsx';
+import Home from './pages/Home.tsx';
+import Login from './pages/Login.tsx';
+import Signup from './pages/Signup.tsx';
+import Cart from './pages/Cart.tsx';
+import Checkout from './pages/Checkout.tsx';
+import UserDashboard from './pages/UserDashboard.tsx';
+import AdminDashboard from './pages/AdminDashboard.tsx';
+import AdminProducts from './pages/AdminProducts.tsx';
+import AdminHero from './pages/AdminHero.tsx';
+import AdminSettings from './pages/AdminSettings.tsx';
+import ProductDetail from './pages/ProductDetail.tsx';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);

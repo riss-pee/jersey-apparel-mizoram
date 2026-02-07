@@ -1,8 +1,0 @@
-{
-  "name": "Jersey Apparel Mizoram",
-  "description": "A premium e-commerce platform for football jerseys in Mizoram, featuring user and admin dashboards, product management, and AI-powered descriptions.",
-  "requestFramePermissions": [
-    "camera",
-    "geolocation"
-  ]
-}
