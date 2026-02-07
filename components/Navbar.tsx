@@ -26,11 +26,20 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
 
   const isAdmin = user?.role === 'ADMIN';
 
+  const handleLogoClick = () => {
+    if (isAdmin) {
+      onNavigate('admin-dashboard');
+    } else {
+      onNavigate('home');
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className="bg-jam-green text-white sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center cursor-pointer" onClick={() => handleMobileNav('home')}>
+          <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
             <span className="text-xl font-bold tracking-tighter">JERSEY APPAREL MIZORAM</span>
           </div>
           
@@ -112,10 +121,10 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
           
           {isAdmin ? (
             <>
-              <button onClick={() => handleMobileNav('admin-dashboard')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Admin Orders</button>
-              <button onClick={() => handleMobileNav('admin-products')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Manage Inventory</button>
-              <button onClick={() => handleMobileNav('admin-hero')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Manage Hero</button>
-              <button onClick={() => handleMobileNav('admin-settings')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Store Settings</button>
+              <button onClick={() => handleMobileNav('admin-dashboard')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Orders</button>
+              <button onClick={() => handleMobileNav('admin-products')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Inventory</button>
+              <button onClick={() => handleMobileNav('admin-hero')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Banners</button>
+              <button onClick={() => handleMobileNav('admin-settings')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Settings</button>
             </>
           ) : (
             user && <button onClick={() => handleMobileNav('user-dashboard')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">My Orders</button>
