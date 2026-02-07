@@ -264,36 +264,44 @@ const App: React.FC = () => {
         {renderPage()}
       </main>
 
-      <footer className="bg-gray-950 text-white py-16 px-4 mt-auto">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+      <footer className="bg-gray-950 text-white py-24 px-4 mt-auto">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 text-center md:text-left">
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-black mb-4 tracking-tighter italic uppercase">JERSEY APPAREL MIZORAM</h3>
-            <p className="text-gray-400 max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 italic whitespace-pre-line">
-              {siteSettings?.aboutUs || "Mizoram's leading destination for authentic football kits."}
+            <h3 className="text-3xl font-black mb-6 tracking-tighter italic uppercase text-white">Jersey Apparel Mizoram</h3>
+            <p className="text-gray-400 max-w-md mx-auto md:mx-0 leading-relaxed mb-8 italic whitespace-pre-line font-medium text-sm">
+              {siteSettings?.aboutUs || "Mizoram's leading destination for authentic football kits. Bringing the world's most iconic jerseys to the heart of Aizawl."}
             </p>
           </div>
+          
           <div>
-             <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6">ABOUT US</h4>
-             <div className="flex flex-col space-y-4 text-xs font-bold text-gray-400">
-                <a href={`https://instagram.com/${siteSettings?.instagramHandle || 'jerseyapparel_mizoram'}`} target="_blank" className="hover:text-white transition-colors group flex items-center justify-center md:justify-start">
-                   <span className="uppercase tracking-widest group-hover:translate-x-1 transition-transform">Instagram</span>
+             <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] mb-8">About Us</h4>
+             <div className="flex flex-col space-y-6">
+                <a href={`https://instagram.com/${siteSettings?.instagramHandle || 'jerseyapparel_mizoram'}`} target="_blank" className="group flex items-center justify-center md:justify-start space-x-3 text-gray-400 hover:text-white transition-colors">
+                   <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-jam-green transition-all">
+                      <span className="text-[10px] font-black italic">IG</span>
+                   </div>
+                   <span className="text-xs font-black uppercase tracking-widest">Instagram</span>
                 </a>
-                <a href={`https://wa.me/${siteSettings?.whatsappNumber || '919876543210'}`} target="_blank" className="hover:text-white transition-colors group flex items-center justify-center md:justify-start">
-                   <span className="uppercase tracking-widest group-hover:translate-x-1 transition-transform">WhatsApp</span>
+                <a href={`https://wa.me/${siteSettings?.whatsappNumber || '919876543210'}`} target="_blank" className="group flex items-center justify-center md:justify-start space-x-3 text-gray-400 hover:text-white transition-colors">
+                   <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-jam-green transition-all">
+                      <span className="text-[10px] font-black italic">WA</span>
+                   </div>
+                   <span className="text-xs font-black uppercase tracking-widest">WhatsApp</span>
                 </a>
              </div>
           </div>
+
           <div>
-             <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6">Store Integrity</h4>
-             <p className="text-[10px] text-gray-500 font-bold leading-relaxed whitespace-pre-line">
+             <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] mb-8">Store Integrity</h4>
+             <p className="text-[10px] text-gray-500 font-black uppercase leading-relaxed tracking-widest whitespace-pre-line">
                 {siteSettings?.footerTagline || "Authenticity and passion in every thread."}
                 <br /><br />
-                © 2024 Jersey Apparel Mizoram. Built for the community.
+                © 2024 JAM. <br />All Rights Reserved.
              </p>
           </div>
         </div>
-        <div className="mt-16 pt-8 border-t border-white/5 flex flex-col items-center">
-          <p className="text-[9px] font-black uppercase tracking-[0.4em] text-gray-700 italic flex items-center">
+        <div className="mt-20 pt-10 border-t border-white/5 flex flex-col items-center">
+          <p className="text-[8px] font-black uppercase tracking-[0.6em] text-gray-700 italic flex items-center">
             Designed & Engineered by <span className="text-jam-green ml-2">RSP</span>
           </p>
         </div>
