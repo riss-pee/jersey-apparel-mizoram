@@ -293,7 +293,7 @@ const App: React.FC = () => {
              <p className="text-[10px] text-gray-500 font-bold leading-relaxed">
                 {siteSettings?.footerTagline || "Authenticity and passion in every thread."}
                 <br /><br />
-                © 2024 Jersey Apparel Mizoram. Built for the community.
+                © 2024 Jersey Apparel Mizoram.
              </p>
           </div>
         </div>
