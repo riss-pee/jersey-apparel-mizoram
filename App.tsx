@@ -271,29 +271,24 @@ const App: React.FC = () => {
             <p className="text-gray-400 max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 italic whitespace-pre-line">
               {siteSettings?.aboutUs || "Mizoram's leading destination for authentic football kits."}
             </p>
-            <div className="flex justify-center md:justify-start space-x-6">
-               <a href={`https://instagram.com/${siteSettings?.instagramHandle || 'jerseyapparel_mizoram'}`} target="_blank" className="text-jam-green hover:text-white transition-colors">
-                  <span className="font-black text-xs uppercase tracking-widest">Instagram</span>
-               </a>
-               <a href={`https://wa.me/${siteSettings?.whatsappNumber || '919876543210'}`} target="_blank" className="text-jam-green hover:text-white transition-colors">
-                  <span className="font-black text-xs uppercase tracking-widest">WhatsApp</span>
-               </a>
-            </div>
           </div>
           <div>
-             <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6">Quick Links</h4>
-             <ul className="space-y-4 text-xs font-bold text-gray-400">
-                <li><button onClick={() => setCurrentPage('home')} className="hover:text-white transition">Catalog</button></li>
-                <li><button onClick={() => setCurrentPage('login')} className="hover:text-white transition">Login</button></li>
-                <li><button onClick={() => setCurrentPage('signup')} className="hover:text-white transition">Create Account</button></li>
-             </ul>
+             <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6">ABOUT US</h4>
+             <div className="flex flex-col space-y-4 text-xs font-bold text-gray-400">
+                <a href={`https://instagram.com/${siteSettings?.instagramHandle || 'jerseyapparel_mizoram'}`} target="_blank" className="hover:text-white transition-colors">
+                   <span className="uppercase tracking-widest">Instagram</span>
+                </a>
+                <a href={`https://wa.me/${siteSettings?.whatsappNumber || '919876543210'}`} target="_blank" className="hover:text-white transition-colors">
+                   <span className="uppercase tracking-widest">WhatsApp</span>
+                </a>
+             </div>
           </div>
           <div>
              <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6">Store Integrity</h4>
              <p className="text-[10px] text-gray-500 font-bold leading-relaxed whitespace-pre-line">
                 {siteSettings?.footerTagline || "Authenticity and passion in every thread."}
                 <br /><br />
-                © 2024 Jersey Apparel Mizoram.
+                © 2024 Jersey Apparel Mizoram. Built for the community.
              </p>
           </div>
         </div>
