@@ -39,46 +39,46 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
     <nav className="bg-jam-green text-white sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Brand & Admin Nav Group */}
+          {/* Brand Area */}
           <div className="flex items-center">
-            <div className="flex items-center cursor-pointer mr-8" onClick={handleLogoClick}>
-              <span className="text-xl font-bold tracking-tighter">JERSEY APPAREL MIZORAM</span>
+            <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
+              <span className="text-xl font-black italic uppercase tracking-tighter">Jersey Apparel Mizoram</span>
             </div>
             
-            <div className="hidden md:block">
+            <div className="hidden md:block ml-10">
               <div className="flex items-baseline space-x-1">
                 {isAdmin && (
                   <>
-                    <button onClick={() => onNavigate('admin-dashboard')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Orders</button>
-                    <button onClick={() => onNavigate('admin-products')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Inventory</button>
-                    <button onClick={() => onNavigate('admin-hero')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Banners</button>
-                    <button onClick={() => onNavigate('admin-settings')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Settings</button>
+                    <button onClick={() => onNavigate('admin-dashboard')} className="px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest hover:bg-green-700 transition">Orders</button>
+                    <button onClick={() => onNavigate('admin-products')} className="px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest hover:bg-green-700 transition">Inventory</button>
+                    <button onClick={() => onNavigate('admin-hero')} className="px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest hover:bg-green-700 transition">Banners</button>
+                    <button onClick={() => onNavigate('admin-settings')} className="px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest hover:bg-green-700 transition">Settings</button>
                   </>
                 )}
                 {!isAdmin && user && (
-                  <button onClick={() => onNavigate('user-dashboard')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">My Orders</button>
+                  <button onClick={() => onNavigate('user-dashboard')} className="px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest hover:bg-green-700 transition">My Locker</button>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Right Side Utility Cluster (Home, Cart, Auth) */}
+          {/* Right Side Cluster: Home, Cart, Auth */}
           <div className="flex items-center space-x-2 md:space-x-4">
             <div className="flex items-center space-x-2">
               <button 
                 onClick={() => onNavigate('home')} 
-                className="hidden md:block px-3 py-2 rounded-md text-xs font-black uppercase tracking-widest hover:bg-green-700 transition"
+                className="hidden md:block px-3 py-2 rounded-md text-[10px] font-black uppercase tracking-widest hover:bg-green-700 transition border border-transparent hover:border-white/20"
               >
                 Home
               </button>
               
               {!isAdmin && (
-                <button onClick={() => handleMobileNav('cart')} className="relative p-2 rounded-full hover:bg-green-700 transition">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                <button onClick={() => handleMobileNav('cart')} className="relative p-2 rounded-full hover:bg-green-700 transition group">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                   </svg>
                   {cartCount > 0 && (
-                    <span className="absolute top-0 right-0 bg-red-500 text-[10px] text-white rounded-full h-5 w-5 flex items-center justify-center font-black">
+                    <span className="absolute top-0 right-0 bg-red-500 text-[10px] text-white rounded-full h-5 w-5 flex items-center justify-center font-black animate-in zoom-in duration-300">
                       {cartCount}
                     </span>
                   )}
@@ -94,7 +94,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
                 </div>
               ) : (
                 <div className="space-x-2">
-                  <button onClick={() => onNavigate('login')} className="bg-white text-jam-green px-6 py-1.5 rounded-lg text-[10px] font-black hover:bg-gray-100 transition uppercase tracking-widest">Login</button>
+                  <button onClick={() => onNavigate('login')} className="bg-white text-jam-green px-6 py-1.5 rounded-lg text-[10px] font-black hover:bg-gray-100 transition uppercase tracking-widest shadow-xl">Login</button>
                 </div>
               )}
             </div>
@@ -120,33 +120,29 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
 
       {/* Mobile Menu */}
       <div 
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-green-900/95 backdrop-blur-lg border-t border-white/10 ${
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-green-950 border-t border-white/5 ${
           isMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
         }`}
       >
         <div className="px-4 pt-4 pb-8 space-y-2">
-          <button onClick={() => handleMobileNav('home')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Home</button>
+          <button onClick={() => handleMobileNav('home')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-green-800 transition">Home</button>
           
           {isAdmin ? (
             <>
-              <button onClick={() => handleMobileNav('admin-dashboard')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Orders</button>
-              <button onClick={() => handleMobileNav('admin-products')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Inventory</button>
-              <button onClick={() => handleMobileNav('admin-hero')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Banners</button>
-              <button onClick={() => handleMobileNav('admin-settings')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Settings</button>
+              <button onClick={() => handleMobileNav('admin-dashboard')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-green-800 transition">Orders</button>
+              <button onClick={() => handleMobileNav('admin-products')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-green-800 transition">Inventory</button>
+              <button onClick={() => handleMobileNav('admin-hero')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-green-800 transition">Banners</button>
+              <button onClick={() => handleMobileNav('admin-settings')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-green-800 transition">Settings</button>
             </>
           ) : (
-            user && <button onClick={() => handleMobileNav('user-dashboard')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">My Orders</button>
+            user && <button onClick={() => handleMobileNav('user-dashboard')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-green-800 transition">My Locker</button>
           )}
 
-          <div className="pt-4 border-t border-white/10 mt-4 space-y-4">
+          <div className="pt-4 border-t border-white/10 mt-4 space-y-4 text-center">
             {user ? (
-              <div className="px-4">
-                <button onClick={handleLogout} className="w-full bg-white text-jam-green py-3 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-gray-100 transition">Logout</button>
-              </div>
+              <button onClick={handleLogout} className="w-full bg-white text-jam-green py-4 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-gray-100 transition shadow-xl">Logout</button>
             ) : (
-              <div className="px-2">
-                <button onClick={() => onNavigate('login')} className="w-full py-3 text-sm font-black bg-white text-jam-green rounded-xl hover:bg-gray-100 transition shadow-lg">Login</button>
-              </div>
+              <button onClick={() => onNavigate('login')} className="w-full py-4 text-xs font-black bg-white text-jam-green rounded-2xl hover:bg-gray-100 transition shadow-2xl">Login</button>
             )}
           </div>
         </div>
