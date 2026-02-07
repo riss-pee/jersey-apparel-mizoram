@@ -169,6 +169,15 @@ const App: React.FC = () => {
     showToast("Item removed from bag");
   };
 
+  const updateCartQuantity = (productId: string, size: string, newQuantity: number) => {
+    if (newQuantity < 1) return;
+    setCart(prev => prev.map(item => 
+      (item.productId === productId && item.size === size) 
+      ? { ...item, quantity: newQuantity } 
+      : item
+    ));
+  };
+
   const clearCart = () => setCart([]);
 
   const handlePlaceOrder = async (shippingAddress: string, userPhone: string, lat?: number, lng?: number) => {
@@ -216,7 +225,7 @@ const App: React.FC = () => {
       case 'home': return <Home products={products} reviews={reviews} heroSlides={heroSlides} onAddToCart={addToCart} onNavigate={setCurrentPage} onProductClick={handleNavigateToProduct} />;
       case 'login': return <Login onLoginSuccess={handleAuthSuccess} onNavigate={setCurrentPage} />;
       case 'signup': return <Signup onSignupSuccess={handleAuthSuccess} onNavigate={setCurrentPage} />;
-      case 'cart': return <Cart cartItems={cart} onRemove={removeFromCart} onCheckout={() => setCurrentPage(user ? 'checkout' : 'login')} onNavigate={setCurrentPage} />;
+      case 'cart': return <Cart cartItems={cart} onRemove={removeFromCart} onUpdateQuantity={updateCartQuantity} onCheckout={() => setCurrentPage(user ? 'checkout' : 'login')} onNavigate={setCurrentPage} />;
       case 'checkout': return <Checkout user={user} cartItems={cart} siteSettings={siteSettings} onPlaceOrder={handlePlaceOrder} onNavigate={setCurrentPage} />;
       case 'user-dashboard': return <UserDashboard user={user} orders={orders} onUserUpdate={(u) => { setUser(u); showToast("Profile updated!"); }} />;
       case 'admin-dashboard': return <AdminDashboard user={user} orders={orders} onOrderUpdate={async () => setOrders(await storageService.getOrders())} />;
