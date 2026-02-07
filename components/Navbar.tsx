@@ -34,7 +34,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
           
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-1">
-              <button onClick={() => onNavigate('home')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Home</button>
               {user?.role === 'ADMIN' ? (
                 <>
                   <button onClick={() => onNavigate('admin-dashboard')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Orders</button>
@@ -63,6 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
             </button>
             
             <div className="hidden md:flex items-center space-x-4">
+              <button onClick={() => onNavigate('home')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Home</button>
               {user ? (
                 <div className="flex items-center space-x-4">
                   <span className="text-xs font-bold uppercase tracking-widest text-green-200">{user.name}</span>
@@ -120,7 +120,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
               </div>
             ) : (
               <div className="px-2">
-                <button onClick={() => handleMobileNav('login')} className="w-full py-3 text-sm font-black bg-white text-jam-green rounded-xl hover:bg-gray-100 transition shadow-lg">Login</button>
+                <button onClick={() => onNavigate('login')} className="w-full py-3 text-sm font-black bg-white text-jam-green rounded-xl hover:bg-gray-100 transition shadow-lg">Login</button>
               </div>
             )}
           </div>
