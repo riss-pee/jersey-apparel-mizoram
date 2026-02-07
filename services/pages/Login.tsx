@@ -3,44 +3,39 @@ import React, { useState } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { User } from '../types';
 
-interface SignupProps {
-  onSignupSuccess: (user: User) => void;
+interface LoginProps {
+  onLoginSuccess: (user: User) => void;
   onNavigate: (page: string) => void;
 }
 
-const Signup: React.FC<SignupProps> = ({ onSignupSuccess, onNavigate }) => {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'USER' });
+const Login: React.FC<LoginProps> = ({ onLoginSuccess, onNavigate }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    const { data, error: authError } = await supabase.auth.signUp({
-      email: formData.email,
-      password: formData.password,
-      options: {
-        data: {
-          name: formData.name,
-          role: 'USER' // Hardcoded to USER for security
-        }
-      }
+    const { data, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
     });
-
+    
     if (authError) {
       setError(authError.message);
       setLoading(false);
     } else if (data.user) {
-      const newUser: User = {
+      const u: User = {
         id: data.user.id,
-        name: formData.name,
-        email: formData.email,
-        role: 'USER',
+        name: data.user.user_metadata.name || 'User',
+        email: data.user.email || '',
+        role: data.user.user_metadata.role || 'USER',
         createdAt: data.user.created_at
       };
-      onSignupSuccess(newUser);
+      onLoginSuccess(u);
     }
   };
 
@@ -48,30 +43,20 @@ const Signup: React.FC<SignupProps> = ({ onSignupSuccess, onNavigate }) => {
     <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 px-4">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-gray-100">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900">Create Account</h2>
-          <p className="mt-2 text-sm text-gray-600">Join the JAM community today.</p>
+          <h2 className="text-3xl font-extrabold text-gray-900">Welcome Back</h2>
+          <p className="mt-2 text-sm text-gray-600">Secure access to Jersey Apparel Mizoram.</p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSignup}>
+        <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           {error && <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm border border-red-100">{error}</div>}
           <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-              <input 
-                type="text" 
-                required 
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-jam-green focus:border-transparent transition-all outline-none" 
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-              />
-            </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
               <input 
                 type="email" 
                 required 
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-jam-green focus:border-transparent transition-all outline-none" 
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -80,8 +65,8 @@ const Signup: React.FC<SignupProps> = ({ onSignupSuccess, onNavigate }) => {
                 type="password" 
                 required 
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-jam-green focus:border-transparent transition-all outline-none" 
-                value={formData.password}
-                onChange={(e) => setFormData({...formData, password: e.target.value})}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
@@ -91,13 +76,13 @@ const Signup: React.FC<SignupProps> = ({ onSignupSuccess, onNavigate }) => {
             disabled={loading}
             className="w-full bg-jam-green text-white py-3 rounded-lg font-bold hover:bg-green-800 transition-all shadow-md disabled:bg-gray-400"
           >
-            {loading ? 'Creating Account...' : 'Create Account'}
+            {loading ? 'Authenticating...' : 'Sign In'}
           </button>
           
           <div className="text-center">
             <p className="text-sm text-gray-600">
-              Already have an account? {' '}
-              <button type="button" onClick={() => onNavigate('login')} className="font-bold text-jam-green hover:underline">Log in</button>
+              Don't have an account? {' '}
+              <button type="button" onClick={() => onNavigate('signup')} className="font-bold text-jam-green hover:underline">Sign up now</button>
             </p>
           </div>
         </form>
@@ -106,4 +91,4 @@ const Signup: React.FC<SignupProps> = ({ onSignupSuccess, onNavigate }) => {
   );
 };
 
-export default Signup;
+export default Login;
