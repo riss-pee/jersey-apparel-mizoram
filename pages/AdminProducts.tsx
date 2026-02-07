@@ -11,6 +11,8 @@ interface AdminProductsProps {
   onUpdate: () => void;
 }
 
+const ALL_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'];
+
 const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, onUpdate }) => {
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -18,7 +20,6 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
   const [isSaving, setIsSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
-  const [confirmingProductId, setConfirmingProductId] = useState<string | null>(null);
   const [filterCategory, setFilterCategory] = useState<string>('All');
   
   const [formData, setFormData] = useState<Partial<Product>>({
@@ -72,6 +73,18 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
     setUploadError(null);
     setFormData({ ...p, sizes: p.sizes || [], images: p.images || (p.image ? [p.image] : []) });
     setShowModal(true);
+  };
+
+  const toggleSize = (size: string) => {
+    setFormData(prev => {
+      const currentSizes = prev.sizes || [];
+      const newSizes = currentSizes.includes(size)
+        ? currentSizes.filter(s => s !== size)
+        : [...currentSizes, size];
+      // Sort them logically by the order of ALL_SIZES
+      const sortedSizes = [...newSizes].sort((a, b) => ALL_SIZES.indexOf(a) - ALL_SIZES.indexOf(b));
+      return { ...prev, sizes: sortedSizes };
+    });
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,6 +143,10 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
     e.preventDefault();
     if (!formData.image && (!formData.images || formData.images.length === 0)) {
       alert("Please upload at least one image for the jersey.");
+      return;
+    }
+    if (!formData.sizes || formData.sizes.length === 0) {
+      alert("Please select at least one available size.");
       return;
     }
     setIsSaving(true);
@@ -211,7 +228,12 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
                 </div>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{product.team} • {product.category.replace('_', ' ')}</p>
                 
-                {/* Rating Section */}
+                <div className="flex flex-wrap gap-1 mb-3">
+                   {product.sizes?.map(s => (
+                     <span key={s} className="text-[8px] font-black bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded uppercase">{s}</span>
+                   ))}
+                </div>
+
                 <div className="flex items-center space-x-2 mb-4 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-100 w-fit">
                    {rating ? (
                      <>
@@ -286,7 +308,7 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div>
                     <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Model Name</label>
                     <input required className="w-full border-2 border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-4 focus:ring-jam-green/10 transition font-bold" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="e.g. Home Kit 24/25" />
@@ -294,6 +316,28 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
                   <div>
                     <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Club / National Team</label>
                     <input required className="w-full border-2 border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-4 focus:ring-jam-green/10 transition font-bold" value={formData.team} onChange={e => setFormData({...formData, team: e.target.value})} placeholder="e.g. Manchester United" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Available Sizes</label>
+                    <div className="flex flex-wrap gap-3">
+                       {ALL_SIZES.map(size => {
+                         const isActive = formData.sizes?.includes(size);
+                         return (
+                           <button
+                            key={size}
+                            type="button"
+                            onClick={() => toggleSize(size)}
+                            className={`min-w-[50px] px-3 py-3 rounded-xl border-2 font-black text-xs transition-all uppercase ${
+                              isActive 
+                              ? 'border-jam-green bg-jam-green text-white shadow-lg' 
+                              : 'border-gray-100 bg-gray-50 text-gray-400 hover:border-jam-green/20'
+                            }`}
+                           >
+                             {size}
+                           </button>
+                         );
+                       })}
+                    </div>
                   </div>
                 </div>
                 <div>
@@ -304,7 +348,7 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
                         <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M11.3 1.047a1 1 0 00-1.2 0l-7 5a1 1 0 00-.4.8v11a1 1 0 001 1h12a1 1 0 001-1v-11a1 1 0 00-.4-.8l-7-5zM10 3.012l5 3.57V17H5V6.582l5-3.57z" clipRule="evenodd"/><path d="M10 6a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V7a1 1 0 011-1z"/></svg>
                      </button>
                    </div>
-                   <textarea rows={5} required className="w-full border-2 border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-4 focus:ring-jam-green/10 transition font-medium text-sm leading-relaxed" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Tactical description of the kit..." />
+                   <textarea rows={8} required className="w-full border-2 border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-4 focus:ring-jam-green/10 transition font-medium text-sm leading-relaxed" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Tactical description of the kit..." />
                 </div>
               </div>
               
