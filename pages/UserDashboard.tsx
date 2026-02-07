@@ -62,7 +62,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user, orders, onUserUpdat
       };
       
       await storageService.addReview(newReview);
-      alert("Field report submitted! Thank you for the feedback.");
+      alert("Review submitted! Thank you for the feedback.");
       setReviewingItem(null);
       setReviewComment('');
       setReviewRating(5);
@@ -144,7 +144,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user, orders, onUserUpdat
             <div className="bg-white p-8 rounded-[2.5rem] shadow-2xl border-2 border-jam-green/20 animate-in zoom-in-95 duration-300">
                <div className="flex justify-between items-start mb-8">
                   <div>
-                    <h2 className="text-2xl font-black italic tracking-tighter uppercase text-gray-900">Field Report</h2>
+                    <h2 className="text-2xl font-black italic tracking-tighter uppercase text-gray-900">Review Item</h2>
                     <p className="text-[10px] font-black text-jam-green uppercase tracking-widest">Rate your {reviewingItem.item.productName}</p>
                   </div>
                   <button onClick={() => setReviewingItem(null)} className="text-gray-400 hover:text-red-500">
@@ -154,7 +154,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user, orders, onUserUpdat
                
                <form onSubmit={handleSubmitReview} className="space-y-8">
                   <div>
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Tactical Performance (Rating)</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Rating</label>
                     <div className="flex space-x-2">
                        {[1, 2, 3, 4, 5].map(star => (
                          <button 
@@ -170,7 +170,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user, orders, onUserUpdat
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Your Assessment (Comment)</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Your Thoughts</label>
                     <textarea 
                       required
                       rows={4}
@@ -186,7 +186,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user, orders, onUserUpdat
                     disabled={isSubmittingReview}
                     className="w-full bg-jam-green text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-2xl hover:bg-green-800 disabled:bg-gray-300 transition-all active:scale-95"
                   >
-                    {isSubmittingReview ? 'Reporting...' : 'Publish Field Report'}
+                    {isSubmittingReview ? 'Submitting...' : 'Submit Review'}
                   </button>
                </form>
             </div>
