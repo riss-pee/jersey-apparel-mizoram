@@ -39,7 +39,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
     <nav className="bg-jam-green text-white sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Brand & Main Nav Group */}
+          {/* Brand & Admin Nav Group */}
           <div className="flex items-center">
             <div className="flex items-center cursor-pointer mr-8" onClick={handleLogoClick}>
               <span className="text-xl font-bold tracking-tighter">JERSEY APPAREL MIZORAM</span>
@@ -47,14 +47,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
             
             <div className="hidden md:block">
               <div className="flex items-baseline space-x-1">
-                {!isAdmin ? (
-                  <>
-                    {/* Home button shifted to the right cluster */}
-                    {user && (
-                      <button onClick={() => onNavigate('user-dashboard')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">My Orders</button>
-                    )}
-                  </>
-                ) : (
+                {isAdmin && (
                   <>
                     <button onClick={() => onNavigate('admin-dashboard')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Orders</button>
                     <button onClick={() => onNavigate('admin-products')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Inventory</button>
@@ -62,15 +55,24 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
                     <button onClick={() => onNavigate('admin-settings')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Settings</button>
                   </>
                 )}
+                {!isAdmin && user && (
+                  <button onClick={() => onNavigate('user-dashboard')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">My Orders</button>
+                )}
               </div>
             </div>
           </div>
 
-          {/* Right Side Utility Cluster */}
+          {/* Right Side Utility Cluster (Home, Cart, Auth) */}
           <div className="flex items-center space-x-2 md:space-x-4">
-            {!isAdmin && (
-              <div className="flex items-center space-x-2">
-                <button onClick={() => onNavigate('home')} className="hidden md:block px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Home</button>
+            <div className="flex items-center space-x-2">
+              <button 
+                onClick={() => onNavigate('home')} 
+                className="hidden md:block px-3 py-2 rounded-md text-xs font-black uppercase tracking-widest hover:bg-green-700 transition"
+              >
+                Home
+              </button>
+              
+              {!isAdmin && (
                 <button onClick={() => handleMobileNav('cart')} className="relative p-2 rounded-full hover:bg-green-700 transition">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -81,18 +83,18 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
                     </span>
                   )}
                 </button>
-              </div>
-            )}
+              )}
+            </div>
             
             <div className="hidden md:flex items-center space-x-4 ml-4">
               {user ? (
                 <div className="flex items-center space-x-4 border-l border-white/10 pl-4">
-                  <span className="text-xs font-bold uppercase tracking-widest text-green-200">{user.name}</span>
-                  <button onClick={onLogout} className="bg-white text-jam-green px-4 py-1.5 rounded-lg text-xs font-black hover:bg-gray-100 transition uppercase tracking-widest">Logout</button>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-green-200">{user.name}</span>
+                  <button onClick={onLogout} className="bg-white text-jam-green px-4 py-1.5 rounded-lg text-[10px] font-black hover:bg-gray-100 transition uppercase tracking-widest">Logout</button>
                 </div>
               ) : (
                 <div className="space-x-2">
-                  <button onClick={() => onNavigate('login')} className="bg-white text-jam-green px-6 py-1.5 rounded-lg text-xs font-black hover:bg-gray-100 transition uppercase tracking-widest">Login</button>
+                  <button onClick={() => onNavigate('login')} className="bg-white text-jam-green px-6 py-1.5 rounded-lg text-[10px] font-black hover:bg-gray-100 transition uppercase tracking-widest">Login</button>
                 </div>
               )}
             </div>
@@ -116,15 +118,14 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <div 
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-green-900/95 backdrop-blur-lg border-t border-white/10 ${
           isMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
         }`}
       >
         <div className="px-4 pt-4 pb-8 space-y-2">
-          {!isAdmin && (
-            <button onClick={() => handleMobileNav('home')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Home</button>
-          )}
+          <button onClick={() => handleMobileNav('home')} className="w-full text-left px-4 py-3 rounded-xl text-sm font-bold hover:bg-green-800 transition">Home</button>
           
           {isAdmin ? (
             <>
