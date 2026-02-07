@@ -39,23 +39,34 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
     <nav className="bg-jam-green text-white sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
-            <span className="text-xl font-bold tracking-tighter">JERSEY APPAREL MIZORAM</span>
-          </div>
-          
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-1">
-              {isAdmin && (
-                <>
-                  <button onClick={() => onNavigate('admin-dashboard')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Orders</button>
-                  <button onClick={() => onNavigate('admin-products')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Products</button>
-                  <button onClick={() => onNavigate('admin-hero')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Hero</button>
-                  <button onClick={() => onNavigate('admin-settings')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Settings</button>
-                </>
-              )}
+          {/* Brand & Main Nav Group */}
+          <div className="flex items-center">
+            <div className="flex items-center cursor-pointer mr-8" onClick={handleLogoClick}>
+              <span className="text-xl font-bold tracking-tighter">JERSEY APPAREL MIZORAM</span>
+            </div>
+            
+            <div className="hidden md:block">
+              <div className="flex items-baseline space-x-1">
+                {!isAdmin ? (
+                  <>
+                    <button onClick={() => onNavigate('home')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Home</button>
+                    {user && (
+                      <button onClick={() => onNavigate('user-dashboard')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">My Orders</button>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <button onClick={() => onNavigate('admin-dashboard')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Orders</button>
+                    <button onClick={() => onNavigate('admin-products')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Inventory</button>
+                    <button onClick={() => onNavigate('admin-hero')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Banners</button>
+                    <button onClick={() => onNavigate('admin-settings')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Settings</button>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
+          {/* Right Side Utility Cluster */}
           <div className="flex items-center space-x-2 md:space-x-4">
             {!isAdmin && (
               <button onClick={() => handleMobileNav('cart')} className="relative p-2 rounded-full hover:bg-green-700 transition">
@@ -70,28 +81,17 @@ const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout, cartCount }
               </button>
             )}
             
-            <div className="hidden md:flex items-center space-x-1">
-              {!isAdmin && (
-                <>
-                  <button onClick={() => onNavigate('home')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">Home</button>
-                  {user && (
-                    <button onClick={() => onNavigate('user-dashboard')} className="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition">My Orders</button>
-                  )}
-                </>
+            <div className="hidden md:flex items-center space-x-4 ml-4">
+              {user ? (
+                <div className="flex items-center space-x-4 border-l border-white/10 pl-4">
+                  <span className="text-xs font-bold uppercase tracking-widest text-green-200">{user.name}</span>
+                  <button onClick={onLogout} className="bg-white text-jam-green px-4 py-1.5 rounded-lg text-xs font-black hover:bg-gray-100 transition uppercase tracking-widest">Logout</button>
+                </div>
+              ) : (
+                <div className="space-x-2">
+                  <button onClick={() => onNavigate('login')} className="bg-white text-jam-green px-6 py-1.5 rounded-lg text-xs font-black hover:bg-gray-100 transition uppercase tracking-widest">Login</button>
+                </div>
               )}
-              
-              <div className="ml-4 flex items-center space-x-4">
-                {user ? (
-                  <div className="flex items-center space-x-4">
-                    <span className="text-xs font-bold uppercase tracking-widest text-green-200">{user.name}</span>
-                    <button onClick={onLogout} className="bg-white text-jam-green px-4 py-1.5 rounded-lg text-xs font-black hover:bg-gray-100 transition uppercase tracking-widest">Logout</button>
-                  </div>
-                ) : (
-                  <div className="space-x-2">
-                    <button onClick={() => onNavigate('login')} className="bg-white text-jam-green px-6 py-1.5 rounded-lg text-xs font-black hover:bg-gray-100 transition uppercase tracking-widest">Login</button>
-                  </div>
-                )}
-              </div>
             </div>
 
             <button 
