@@ -90,6 +90,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products, siteSe
     );
   };
 
+  // Determine available sizes from product config
+  const availableSizes = product.sizes && product.sizes.length > 0 ? product.sizes : ['FREE SIZE'];
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <nav className="flex mb-10 text-[10px] font-black uppercase tracking-widest text-gray-400" aria-label="Breadcrumb">
@@ -167,15 +170,15 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products, siteSe
           <div className={`bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-xl mb-8 ${isOutOfStock ? 'opacity-50 pointer-events-none grayscale' : ''}`}>
             <div className="mb-10">
               <h3 className="text-[10px] font-black text-gray-900 uppercase tracking-widest mb-6 flex justify-between items-center">
-                 Select Size
+                 Select Available Size
                  <button className="text-jam-green hover:underline decoration-2 underline-offset-4">Size Guide</button>
               </h3>
               <div className="flex flex-wrap gap-4">
-                {(product.sizes && product.sizes.length > 0 ? product.sizes : ['S', 'M', 'L', 'XL', 'XXL']).map(size => (
+                {availableSizes.map(size => (
                   <button
                     key={size}
                     onClick={() => { setSelectedSize(size); setIsAdded(false); }}
-                    className={`min-w-[65px] h-14 flex items-center justify-center rounded-2xl border-2 font-black transition-all duration-300 ${
+                    className={`min-w-[65px] h-14 px-4 flex items-center justify-center rounded-2xl border-2 font-black transition-all duration-300 ${
                       selectedSize === size
                       ? 'border-jam-green bg-jam-green text-white shadow-xl scale-110 z-10'
                       : 'border-gray-100 bg-gray-50 text-gray-400 hover:border-jam-green/30 hover:bg-white'
