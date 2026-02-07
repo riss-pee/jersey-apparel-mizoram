@@ -275,11 +275,11 @@ const App: React.FC = () => {
           <div>
              <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6">ABOUT US</h4>
              <div className="flex flex-col space-y-4 text-xs font-bold text-gray-400">
-                <a href={`https://instagram.com/${siteSettings?.instagramHandle || 'jerseyapparel_mizoram'}`} target="_blank" className="hover:text-white transition-colors">
-                   <span className="uppercase tracking-widest">Instagram</span>
+                <a href={`https://instagram.com/${siteSettings?.instagramHandle || 'jerseyapparel_mizoram'}`} target="_blank" className="hover:text-white transition-colors group flex items-center justify-center md:justify-start">
+                   <span className="uppercase tracking-widest group-hover:translate-x-1 transition-transform">Instagram</span>
                 </a>
-                <a href={`https://wa.me/${siteSettings?.whatsappNumber || '919876543210'}`} target="_blank" className="hover:text-white transition-colors">
-                   <span className="uppercase tracking-widest">WhatsApp</span>
+                <a href={`https://wa.me/${siteSettings?.whatsappNumber || '919876543210'}`} target="_blank" className="hover:text-white transition-colors group flex items-center justify-center md:justify-start">
+                   <span className="uppercase tracking-widest group-hover:translate-x-1 transition-transform">WhatsApp</span>
                 </a>
              </div>
           </div>
