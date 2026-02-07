@@ -268,7 +268,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
           <div className="md:col-span-2">
             <h3 className="text-2xl font-black mb-4 tracking-tighter italic uppercase">JERSEY APPAREL MIZORAM</h3>
-            <p className="text-gray-400 max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 italic">
+            <p className="text-gray-400 max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 italic whitespace-pre-line">
               {siteSettings?.aboutUs || "Mizoram's leading destination for authentic football kits."}
             </p>
             <div className="flex justify-center md:justify-start space-x-6">
@@ -290,7 +290,7 @@ const App: React.FC = () => {
           </div>
           <div>
              <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6">Store Integrity</h4>
-             <p className="text-[10px] text-gray-500 font-bold leading-relaxed">
+             <p className="text-[10px] text-gray-500 font-bold leading-relaxed whitespace-pre-line">
                 {siteSettings?.footerTagline || "Authenticity and passion in every thread."}
                 <br /><br />
                 © 2024 Jersey Apparel Mizoram.
