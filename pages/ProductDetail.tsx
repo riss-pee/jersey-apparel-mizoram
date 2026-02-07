@@ -149,7 +149,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products, siteSe
                  <div className="flex items-center space-x-2 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">
                     {renderStars(Number(averageRating))}
                     <span className="text-[10px] font-black italic">{averageRating}</span>
-                    <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest">({reviews.length} Reports)</span>
+                    <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest">({reviews.length} Reviews)</span>
                  </div>
                )}
             </div>
@@ -234,7 +234,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products, siteSe
         <div className="lg:col-span-8">
            <div className="flex items-center justify-between mb-12">
               <div>
-                <h2 className="text-3xl font-black italic tracking-tighter uppercase text-gray-900">Field Reports</h2>
+                <h2 className="text-3xl font-black italic tracking-tighter uppercase text-gray-900">Reviews</h2>
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Direct feedback from the community</p>
               </div>
               <div className="text-right">
@@ -248,12 +248,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products, siteSe
            {loadingReviews ? (
              <div className="py-20 flex flex-col items-center justify-center space-y-4">
                 <div className="w-12 h-12 border-4 border-jam-green/20 border-t-jam-green rounded-full animate-spin"></div>
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Scanning Registry...</p>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Loading Reviews...</p>
              </div>
            ) : reviews.length === 0 ? (
              <div className="py-24 text-center bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200">
-                <p className="text-gray-400 font-bold italic uppercase tracking-tighter">No reports deployed yet.</p>
-                <p className="text-[9px] text-gray-400 font-black uppercase mt-2">Be the first to provide tactical feedback.</p>
+                <p className="text-gray-400 font-bold italic uppercase tracking-tighter">No reviews available yet.</p>
+                <p className="text-[9px] text-gray-400 font-black uppercase mt-2">Be the first to share your thoughts.</p>
              </div>
            ) : (
              <div className="space-y-10">
@@ -285,7 +285,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products, siteSe
         <div className="lg:col-span-4 space-y-12">
           <div className="bg-gray-950 text-white p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
              <div className="relative z-10">
-                <h3 className="text-xl font-black italic tracking-tighter uppercase mb-6">Tactical Care</h3>
+                <h3 className="text-xl font-black italic tracking-tighter uppercase mb-6">Product Care</h3>
                 <div className="space-y-6">
                    {[
                      { step: '01', title: 'Cold Wash', desc: 'Preserve elasticity.' },
