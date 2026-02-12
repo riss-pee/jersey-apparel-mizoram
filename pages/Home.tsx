@@ -22,9 +22,12 @@ const Home: React.FC<HomeProps> = ({ products, reviews, heroSlides, onAddToCart,
     if (heroSlides.length <= 1) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
+    }, 8000);
     return () => clearInterval(timer);
   }, [heroSlides]);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
 
   const categories = ['All', 'PREMIER_LEAGUE', 'LA_LIGA', 'SERIE_A', 'INTERNATIONAL', 'OTHER'];
 
@@ -64,9 +67,18 @@ const Home: React.FC<HomeProps> = ({ products, reviews, heroSlides, onAddToCart,
     return `linear-gradient(to right, ${hex}66, black)`;
   };
 
+  const getVersionLabel = (v: string) => {
+    switch(v) {
+      case 'PLAYER': return 'Player Ed.';
+      case 'MASTER': return 'Master Copy';
+      case 'FAN': return 'Fan Ed.';
+      default: return 'Standard';
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
-      <section className="relative h-[600px] bg-black overflow-hidden">
+      <section className="relative h-[500px] md:h-[600px] bg-black overflow-hidden group">
         {heroSlides.length > 0 ? (
           heroSlides.map((slide, index) => (
             <div
@@ -78,14 +90,14 @@ const Home: React.FC<HomeProps> = ({ products, reviews, heroSlides, onAddToCart,
             >
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div className="max-w-2xl text-white">
-                  <span className="inline-block bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-6">
+                  <span className="inline-block bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-6">
                     {slide.badge}
                   </span>
-                  <h1 className="text-5xl md:text-7xl font-black italic tracking-tighter uppercase mb-6 whitespace-pre-line leading-none">
+                  <h1 className="text-4xl md:text-7xl font-black italic tracking-tighter uppercase mb-6 whitespace-pre-line leading-none">
                     {slide.title}
                   </h1>
-                  <p className="text-lg md:text-xl text-gray-300 mb-10 font-medium">{slide.description}</p>
-                  <button onClick={() => onNavigate('home')} className="bg-white text-black px-10 py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-gray-200 transition shadow-2xl">
+                  <p className="text-sm md:text-xl text-gray-300 mb-8 md:mb-10 font-medium max-w-lg">{slide.description}</p>
+                  <button onClick={() => onNavigate('home')} className="bg-white text-black px-8 md:px-10 py-3 md:py-4 rounded-xl font-black uppercase tracking-widest text-[10px] md:text-xs hover:bg-gray-200 transition shadow-2xl">
                     {slide.buttonText}
                   </button>
                 </div>
@@ -98,10 +110,28 @@ const Home: React.FC<HomeProps> = ({ products, reviews, heroSlides, onAddToCart,
           </div>
         )}
         
+        {/* Navigation Arrows */}
         {heroSlides.length > 1 && (
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+          <>
+            <button 
+              onClick={prevSlide}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/5 hover:bg-white/20 backdrop-blur-md text-white transition-all opacity-0 group-hover:opacity-100 hidden md:block"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <button 
+              onClick={nextSlide}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/5 hover:bg-white/20 backdrop-blur-md text-white transition-all opacity-0 group-hover:opacity-100 hidden md:block"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </>
+        )}
+
+        {heroSlides.length > 1 && (
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-4 z-20">
             {heroSlides.map((_, i) => (
-              <button key={i} onClick={() => setCurrentSlide(i)} className={`h-1.5 transition-all duration-300 rounded-full ${i === currentSlide ? 'w-8 bg-white' : 'w-2 bg-white/30 hover:bg-white/50'}`} />
+              <button key={i} onClick={() => setCurrentSlide(i)} className={`h-2 transition-all duration-300 rounded-full ${i === currentSlide ? 'w-10 bg-white' : 'w-2 bg-white/30 hover:bg-white/50'}`} />
             ))}
           </div>
         )}
@@ -139,7 +169,15 @@ const Home: React.FC<HomeProps> = ({ products, reviews, heroSlides, onAddToCart,
                 <div key={product.id} onClick={() => onProductClick(product.id)} className="group cursor-pointer">
                   <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-gray-100 mb-4 shadow-sm group-hover:shadow-xl transition-all duration-500">
                     <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                    {product.status === 'ON_SALE' && <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Promo</div>}
+                    
+                    {/* Status & Version Badges */}
+                    <div className="absolute top-4 left-4 flex flex-col gap-2">
+                       {product.status === 'ON_SALE' && <span className="bg-red-600 text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Promo</span>}
+                       <span className={`bg-gray-900/80 backdrop-blur-md text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-white/20`}>
+                         {getVersionLabel(product.version)}
+                       </span>
+                    </div>
+
                     {product.status === 'OUT_OF_STOCK' && <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center"><span className="text-white text-xs font-black uppercase tracking-[0.2em] border-2 border-white px-4 py-2">Sold Out</span></div>}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
                       <span className="text-white text-[10px] font-black uppercase tracking-widest flex items-center">View details <svg className="w-3 h-3 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
@@ -184,8 +222,8 @@ const Home: React.FC<HomeProps> = ({ products, reviews, heroSlides, onAddToCart,
             </div>
             <div className="space-y-4">
               <div className="w-12 h-12 bg-jam-green/10 rounded-2xl flex items-center justify-center text-jam-green mx-auto"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
-              <h4 className="text-xs font-black uppercase tracking-widest">Lunglei Delivery</h4>
-              <p className="text-[10px] text-gray-500 font-bold leading-relaxed px-8 uppercase">Lunglei khawchhunga : Free Delivery</p>
+              <h4 className="text-xs font-black uppercase tracking-widest">Aizawl Delivery</h4>
+              <p className="text-[10px] text-gray-500 font-bold leading-relaxed px-8 uppercase">Fastest local shipping within 24 hours.</p>
             </div>
             <div className="space-y-4">
               <div className="w-12 h-12 bg-jam-green/10 rounded-2xl flex items-center justify-center text-jam-green mx-auto"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
