@@ -12,6 +12,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'The official home jersey for the pride of Mizoram. Features moisture-wicking technology and premium embroidery.',
     stock: 50,
     status: 'AVAILABLE',
+    // Fix: Added missing required version property
+    version: 'FAN',
     category: 'INTERNATIONAL',
     sizes: ['S', 'M', 'L', 'XL']
   },
@@ -25,6 +27,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Official Aizawl FC home kit. Show your support for the People\'s Club.',
     stock: 30,
     status: 'ON_SALE',
+    // Fix: Added missing required version property
+    version: 'FAN',
     category: 'OTHER',
     sizes: ['M', 'L', 'XL', 'XXL']
   },
@@ -38,6 +42,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Classic white Real Madrid jersey. Authentic player edition with premium fabric.',
     stock: 15,
     status: 'AVAILABLE',
+    // Fix: Added missing required version property
+    version: 'FAN',
     category: 'LA_LIGA',
     sizes: ['S', 'M', 'L']
   },
@@ -51,6 +57,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Stylish away kit for the 2024 season. Built for performance and style.',
     stock: 20,
     status: 'AVAILABLE',
+    // Fix: Added missing required version property
+    version: 'FAN',
     category: 'PREMIER_LEAGUE',
     sizes: ['S', 'M', 'L', 'XL', 'XXL']
   }
