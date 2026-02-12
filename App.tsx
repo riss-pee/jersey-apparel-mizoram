@@ -231,8 +231,8 @@ const App: React.FC = () => {
   const renderPage = () => {
     switch (currentPage) {
       case 'home': return <Home products={products} reviews={reviews} heroSlides={heroSlides} onAddToCart={addToCart} onNavigate={setCurrentPage} onProductClick={handleNavigateToProduct} />;
-      case 'login': return <Login onLoginSuccess={handleAuthSuccess} onNavigate={setCurrentPage} />;
-      case 'signup': return <Signup onSignupSuccess={handleAuthSuccess} onNavigate={setCurrentPage} />;
+      case 'login': return <Login onAuthSuccess={handleAuthSuccess} onNavigate={setCurrentPage} />;
+      case 'signup': return <Signup onAuthSuccess={handleAuthSuccess} onNavigate={setCurrentPage} />;
       case 'cart': return <Cart cartItems={cart} onRemove={removeFromCart} onUpdateQuantity={updateCartQuantity} onCheckout={() => setCurrentPage(user ? 'checkout' : 'login')} onNavigate={setCurrentPage} />;
       case 'checkout': return <Checkout user={user} cartItems={cart} siteSettings={siteSettings} onPlaceOrder={handlePlaceOrder} onNavigate={setCurrentPage} />;
       case 'user-dashboard': return <UserDashboard user={user} orders={orders} onUserUpdate={(u) => { setUser(u); showToast("Identity updated."); }} />;
