@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { User, Product, ProductStatus, Review } from '../types';
+import { User, Product, ProductStatus, JerseyVersion, Review } from '../types';
 import { storageService } from '../services/storageService';
 import { generateProductDescription } from '../services/geminiService';
 
@@ -12,6 +12,7 @@ interface AdminProductsProps {
 }
 
 const ALL_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'];
+const VERSIONS: JerseyVersion[] = ['PLAYER', 'MASTER', 'FAN'];
 
 const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, onUpdate }) => {
   const [showModal, setShowModal] = useState(false);
@@ -31,6 +32,7 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
     description: '',
     stock: 0,
     status: 'AVAILABLE',
+    version: 'FAN',
     category: 'PREMIER_LEAGUE',
     sizes: ['S', 'M', 'L', 'XL']
   });
@@ -62,6 +64,7 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
       description: '',
       stock: 0,
       status: 'AVAILABLE',
+      version: 'FAN',
       category: 'PREMIER_LEAGUE',
       sizes: ['S', 'M', 'L', 'XL']
     });
@@ -71,7 +74,7 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
   const handleOpenEdit = (p: Product) => {
     setEditingProduct(p);
     setUploadError(null);
-    setFormData({ ...p, sizes: p.sizes || [], images: p.images || (p.image ? [p.image] : []) });
+    setFormData({ ...p, sizes: p.sizes || [], images: p.images || (p.image ? [p.image] : []), version: p.version || 'FAN' });
     setShowModal(true);
   };
 
@@ -81,7 +84,6 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
       const newSizes = currentSizes.includes(size)
         ? currentSizes.filter(s => s !== size)
         : [...currentSizes, size];
-      // Sort them logically by the order of ALL_SIZES
       const sortedSizes = [...newSizes].sort((a, b) => ALL_SIZES.indexOf(a) - ALL_SIZES.indexOf(b));
       return { ...prev, sizes: sortedSizes };
     });
@@ -219,6 +221,9 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
                   <span className={`text-[9px] font-black px-3 py-1 rounded-full uppercase shadow-md ${getStatusBadgeColor(product.status)}`}>
                     {product.status.replace('_', ' ')}
                   </span>
+                  <span className="bg-black text-white text-[8px] font-black px-2 py-0.5 rounded uppercase tracking-tighter">
+                    {product.version}
+                  </span>
                 </div>
               </div>
               <div className="p-6 flex-grow flex flex-col">
@@ -241,10 +246,10 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
                            <span className="text-[11px] font-black italic mr-1">{rating.avg}</span>
                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                         </div>
-                        <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest">({rating.count} Field Reports)</span>
+                        <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest">({rating.count} Reports)</span>
                      </>
                    ) : (
-                     <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest">No Tactical Feedback</span>
+                     <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest">No Feedback</span>
                    )}
                 </div>
 
@@ -286,24 +291,13 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
                            <button type="button" onClick={() => setAsMainImage(url)} className="bg-white text-jam-green text-[8px] font-black uppercase px-2 py-1 rounded">Set Main</button>
                            <button type="button" onClick={() => removeImage(idx)} className="bg-red-600 text-white text-[8px] font-black uppercase px-2 py-1 rounded">Remove</button>
                         </div>
-                        {formData.image === url && (
-                          <div className="absolute top-1 left-1 bg-jam-green text-white text-[6px] font-black uppercase px-1.5 py-0.5 rounded shadow">Cover</div>
-                        )}
                       </div>
                     ))}
                     <label className="aspect-[3/4] rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:bg-white hover:border-jam-green transition-all bg-gray-100/50">
                        <input type="file" multiple accept="image/*" onChange={handleFileUpload} className="hidden" />
                        <span className="text-2xl text-gray-400">+</span>
-                       <span className="text-[8px] font-black text-gray-400 uppercase mt-1">Add Photos</span>
                     </label>
                   </div>
-                  {isUploading && (
-                    <div className="flex items-center space-x-3 text-jam-green text-xs font-bold animate-pulse">
-                       <div className="w-4 h-4 border-2 border-jam-green border-t-transparent rounded-full animate-spin"></div>
-                       <span>Uploading high-resolution frames...</span>
-                    </div>
-                  )}
-                  {uploadError && <p className="text-red-500 text-xs font-bold mt-2">{uploadError}</p>}
                 </div>
               </div>
 
@@ -317,35 +311,32 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ user, products, reviews, 
                     <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Club / National Team</label>
                     <input required className="w-full border-2 border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-4 focus:ring-jam-green/10 transition font-bold" value={formData.team} onChange={e => setFormData({...formData, team: e.target.value})} placeholder="e.g. Manchester United" />
                   </div>
+                  
+                  {/* Jersey Version Selection */}
                   <div>
-                    <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Available Sizes</label>
-                    <div className="flex flex-wrap gap-3">
-                       {ALL_SIZES.map(size => {
-                         const isActive = formData.sizes?.includes(size);
-                         return (
-                           <button
-                            key={size}
-                            type="button"
-                            onClick={() => toggleSize(size)}
-                            className={`min-w-[50px] px-3 py-3 rounded-xl border-2 font-black text-xs transition-all uppercase ${
-                              isActive 
-                              ? 'border-jam-green bg-jam-green text-white shadow-lg' 
-                              : 'border-gray-100 bg-gray-50 text-gray-400 hover:border-jam-green/20'
-                            }`}
-                           >
-                             {size}
-                           </button>
-                         );
-                       })}
+                    <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Jersey Version</label>
+                    <div className="flex gap-4">
+                       {VERSIONS.map(v => (
+                         <button 
+                          key={v}
+                          type="button"
+                          onClick={() => setFormData({...formData, version: v})}
+                          className={`flex-1 py-3 rounded-xl border-2 font-black text-[10px] tracking-widest transition-all uppercase ${
+                            formData.version === v ? 'border-jam-green bg-jam-green text-white shadow-lg' : 'border-gray-100 bg-gray-50 text-gray-400'
+                          }`}
+                         >
+                           {v}
+                         </button>
+                       ))}
                     </div>
                   </div>
                 </div>
+                
                 <div>
                    <div className="flex justify-between items-center mb-3">
                      <label className="block text-xs font-black text-gray-400 uppercase tracking-widest">Description</label>
                      <button type="button" onClick={handleAIHelp} disabled={isGenerating} className="text-[10px] font-black text-jam-green uppercase tracking-widest flex items-center hover:underline disabled:opacity-50">
                         {isGenerating ? 'Drafting...' : 'Spark AI Copy'}
-                        <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M11.3 1.047a1 1 0 00-1.2 0l-7 5a1 1 0 00-.4.8v11a1 1 0 001 1h12a1 1 0 001-1v-11a1 1 0 00-.4-.8l-7-5zM10 3.012l5 3.57V17H5V6.582l5-3.57z" clipRule="evenodd"/><path d="M10 6a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V7a1 1 0 011-1z"/></svg>
                      </button>
                    </div>
                    <textarea rows={8} required className="w-full border-2 border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-4 focus:ring-jam-green/10 transition font-medium text-sm leading-relaxed" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Tactical description of the kit..." />
