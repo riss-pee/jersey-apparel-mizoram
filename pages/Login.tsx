@@ -46,8 +46,14 @@ const Login: React.FC<LoginProps> = ({ onAuthSuccess, onNavigate }) => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#FDFBF7]">
-      {/* Left Side: Brand Visuals Asset Folder Style */}
+      {/* Left Side: Brand Visuals Asset Folder Style with Logo Background */}
       <div className="hidden md:flex md:w-7/12 bg-[#053321] relative overflow-hidden items-center justify-center p-12">
+        {/* Logo Background from Assets Folder */}
+        <div 
+          className="absolute inset-0 opacity-10 bg-center bg-no-repeat bg-contain transform scale-90 grayscale brightness-200"
+          style={{ backgroundImage: "url('/assets/logo.png')" }}
+        ></div>
+        
         {/* Fabric Texture Overlay */}
         <div className="absolute inset-0 opacity-15 mix-blend-overlay">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
@@ -57,9 +63,9 @@ const Login: React.FC<LoginProps> = ({ onAuthSuccess, onNavigate }) => {
         <div className="relative z-10 flex flex-col items-center text-center">
           <div className="bg-white/5 backdrop-blur-3xl p-16 rounded-[4rem] border border-white/10 shadow-3xl">
             <div className="flex flex-col items-center">
-               {/* "Asset folder" visual element */}
-               <div className="w-32 h-32 bg-jam-green rounded-3xl mb-8 flex items-center justify-center shadow-2xl animate-pulse">
-                  <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+               {/* "Asset folder" visual element - using Logo as icon */}
+               <div className="w-40 h-40 bg-white/10 rounded-3xl mb-8 flex items-center justify-center shadow-2xl overflow-hidden p-4">
+                  <img src="/assets/logo.png" alt="JAM Logo" className="w-full h-full object-contain" />
                </div>
                
                <h1 className="text-5xl lg:text-7xl font-black italic uppercase leading-[0.85] tracking-tighter text-[#E8E1D3]">
@@ -79,7 +85,8 @@ const Login: React.FC<LoginProps> = ({ onAuthSuccess, onNavigate }) => {
       {/* Right Side: Clean Login Form */}
       <div className="flex-1 flex items-center justify-center p-8 lg:p-20">
         <div className="max-w-md w-full">
-          <div className="md:hidden text-center mb-12">
+          <div className="md:hidden text-center mb-12 flex flex-col items-center">
+             <img src="/assets/logo.png" alt="JAM Logo" className="w-16 h-16 mb-4" />
              <h2 className="text-2xl font-black italic uppercase text-[#053321] tracking-tighter">JAM</h2>
           </div>
 
