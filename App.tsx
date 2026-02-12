@@ -71,7 +71,8 @@ const App: React.FC = () => {
       const savedCart = localStorage.getItem('jam_cart');
       if (savedCart) setCart(JSON.parse(savedCart));
       
-      setLoading(false);
+      // Delay loading slightly for smooth entrance
+      setTimeout(() => setLoading(false), 800);
     };
 
     initApp();
@@ -126,12 +127,12 @@ const App: React.FC = () => {
     await supabase.auth.signOut();
     setUser(null);
     setCurrentPage('home');
-    showToast("Logged out successfully");
+    showToast("Logged out from the locker room.");
   };
 
   const handleAuthSuccess = (u: User) => {
     setUser(u);
-    showToast(`Welcome back, ${u.name}!`);
+    showToast(`Welcome to the field, ${u.name}!`);
     if (u.role === 'ADMIN') {
       setCurrentPage('admin-dashboard');
     } else {
@@ -142,17 +143,17 @@ const App: React.FC = () => {
   const handleNavigateToProduct = (productId: string) => {
     setSelectedProductId(productId);
     setCurrentPage('product-detail');
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const addToCart = (product: Product, size: string, quantity: number = 1) => {
     setCart(prev => {
       const existing = prev.find(item => item.productId === product.id && item.size === size);
       if (existing) {
-        showToast(`Updated quantity of ${product.name} in cart`);
+        showToast(`Quantity updated for ${product.name}`);
         return prev.map(item => (item.productId === product.id && item.size === size) ? { ...item, quantity: item.quantity + quantity } : item);
       }
-      showToast(`${product.name} (${size}) added to bag`);
+      showToast(`${product.name} added to your bag.`);
       return [...prev, {
         productId: product.id,
         productName: product.name,
@@ -166,7 +167,7 @@ const App: React.FC = () => {
 
   const removeFromCart = (productId: string, size: string) => {
     setCart(prev => prev.filter(item => !(item.productId === productId && item.size === size)));
-    showToast("Item removed from bag");
+    showToast("Kit removed from bag.");
   };
 
   const updateCartQuantity = (productId: string, size: string, newQuantity: number) => {
@@ -202,19 +203,26 @@ const App: React.FC = () => {
       await storageService.saveOrder(newOrder);
       setOrders(prev => [newOrder, ...prev]);
       clearCart();
-      showToast("Order placed successfully!", 'success');
+      showToast("Deployment successful! Order placed.", 'success');
       setCurrentPage('user-dashboard');
     } catch (err) {
-      showToast("Error placing order.", 'error');
+      showToast("Logistics error. Please contact support.", 'error');
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-jam-green text-white">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-lg font-bold">Connecting to Mizoram's Finest...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#053321] text-[#E8E1D3]">
+        <div className="relative mb-12">
+          <div className="w-24 h-24 border-2 border-[#E8E1D3]/10 rounded-full animate-ping absolute"></div>
+          <div className="w-24 h-24 border-t-2 border-[#E8E1D3] rounded-full animate-spin"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+             <span className="font-black italic text-xs tracking-tighter">JAM</span>
+          </div>
+        </div>
+        <div className="text-center space-y-2">
+          <h2 className="text-xl font-black italic tracking-widest uppercase">Initializing Registry</h2>
+          <p className="text-[10px] font-black text-[#E8E1D3]/40 uppercase tracking-[0.4em]">Connecting to Aizawl Terminal...</p>
         </div>
       </div>
     );
@@ -227,7 +235,7 @@ const App: React.FC = () => {
       case 'signup': return <Signup onSignupSuccess={handleAuthSuccess} onNavigate={setCurrentPage} />;
       case 'cart': return <Cart cartItems={cart} onRemove={removeFromCart} onUpdateQuantity={updateCartQuantity} onCheckout={() => setCurrentPage(user ? 'checkout' : 'login')} onNavigate={setCurrentPage} />;
       case 'checkout': return <Checkout user={user} cartItems={cart} siteSettings={siteSettings} onPlaceOrder={handlePlaceOrder} onNavigate={setCurrentPage} />;
-      case 'user-dashboard': return <UserDashboard user={user} orders={orders} onUserUpdate={(u) => { setUser(u); showToast("Profile updated!"); }} />;
+      case 'user-dashboard': return <UserDashboard user={user} orders={orders} onUserUpdate={(u) => { setUser(u); showToast("Identity updated."); }} />;
       case 'admin-dashboard': return <AdminDashboard user={user} orders={orders} onOrderUpdate={async () => setOrders(await storageService.getOrders())} />;
       case 'admin-products': return <AdminProducts user={user} products={products} reviews={reviews} onUpdate={async () => { setProducts(await storageService.getProducts()); await fetchReviews(); }} />;
       case 'admin-hero': return <AdminHero user={user} slides={heroSlides} onUpdate={() => fetchGlobalData(user)} />;
@@ -244,17 +252,17 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-green-100 selection:text-jam-green">
       {toast && (
-        <div className={`fixed top-20 right-4 z-[100] transform transition-all duration-500 ease-in-out px-6 py-4 rounded-xl shadow-2xl border-l-4 flex items-center space-x-3 ${
+        <div className={`fixed top-20 right-4 z-[100] transform transition-all duration-500 ease-in-out px-6 py-4 rounded-xl shadow-2xl border-l-4 flex items-center space-x-4 animate-in slide-in-from-right-10 ${
           toast.type === 'success' ? 'bg-white border-jam-green text-gray-800' : 'bg-red-50 border-red-600 text-red-800'
         }`}>
-          <div className={`p-1 rounded-full ${toast.type === 'success' ? 'bg-green-100 text-jam-green' : 'bg-red-100 text-red-600'}`}>
+          <div className={`p-1.5 rounded-full ${toast.type === 'success' ? 'bg-green-100 text-jam-green' : 'bg-red-100 text-red-600'}`}>
             {toast.type === 'success' ? (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
             ) : (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/></svg>
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/></svg>
             )}
           </div>
-          <p className="font-bold text-sm">{toast.message}</p>
+          <p className="font-black uppercase tracking-widest text-[10px]">{toast.message}</p>
         </div>
       )}
 
