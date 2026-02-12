@@ -71,6 +71,7 @@ export interface OrderItem {
   price: number;
   image: string;
   size: string;
+  version: JerseyVersion;
 }
 
 export interface Order {
