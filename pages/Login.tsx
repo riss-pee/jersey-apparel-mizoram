@@ -4,11 +4,11 @@ import { supabase } from '../services/supabaseClient';
 import { User } from '../types';
 
 interface LoginProps {
-  onLoginSuccess: (user: User) => void;
+  onAuthSuccess: (user: User) => void;
   onNavigate: (page: string) => void;
 }
 
-const Login: React.FC<LoginProps> = ({ onLoginSuccess, onNavigate }) => {
+const Login: React.FC<LoginProps> = ({ onAuthSuccess, onNavigate }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,23 +19,28 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess, onNavigate }) => {
     setLoading(true);
     setError('');
 
-    const { data, error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    
-    if (authError) {
-      setError(authError.message);
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (authError) {
+        setError(authError.message);
+        setLoading(false);
+      } else if (data.user) {
+        const u: User = {
+          id: data.user.id,
+          name: data.user.user_metadata.name || 'User',
+          email: data.user.email || '',
+          role: data.user.user_metadata.role || 'USER',
+          createdAt: data.user.created_at
+        };
+        onAuthSuccess(u);
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
       setLoading(false);
-    } else if (data.user) {
-      const u: User = {
-        id: data.user.id,
-        name: data.user.user_metadata.name || 'User',
-        email: data.user.email || '',
-        role: data.user.user_metadata.role || 'USER',
-        createdAt: data.user.created_at
-      };
-      onLoginSuccess(u);
     }
   };
 
