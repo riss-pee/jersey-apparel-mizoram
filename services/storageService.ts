@@ -31,6 +31,7 @@ const prepareProductForDB = (product: Product) => {
     description: product.description,
     stock: Number(product.stock),
     status: product.status,
+    version: product.version || 'FAN',
     category: product.category,
     sizes: Array.isArray(product.sizes) ? product.sizes : []
   };
@@ -45,6 +46,7 @@ export const storageService = {
         return;
       }
       if (!existingProducts || existingProducts.length === 0) {
+        // Fix: Simplified initialization by removing redundant type overrides
         const payload = INITIAL_PRODUCTS.map(p => prepareProductForDB(p));
         await supabase.from('products').insert(payload);
       }
@@ -120,7 +122,8 @@ export const storageService = {
     return (data || []).map(p => ({
       ...p,
       sizes: p.sizes || [],
-      images: Array.isArray(p.images) ? p.images : (p.image ? [p.image] : [])
+      images: Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []),
+      version: p.version || 'FAN'
     }));
   },
 
