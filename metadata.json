@@ -1,8 +1,12 @@
+
 {
   "name": "Jersey Apparel Mizoram",
-  "description": "A premium e-commerce platform for football jerseys in Mizoram, featuring user and admin dashboards, product management, and AI-powered descriptions.",
+  "short_name": "JAM",
+  "description": "Authentic Premium Football Kits in Aizawl. Mizoram's leading destination for high-end sports apparel with AI-powered catalogs and local logistics.",
   "requestFramePermissions": [
     "camera",
     "geolocation"
-  ]
+  ],
+  "theme_color": "#064e3b",
+  "background_color": "#FDFBF7"
 }
