@@ -70,8 +70,18 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products, siteSe
     setTimeout(() => setIsAdded(false), 2000);
   };
 
+  const getVersionBadge = (v: string) => {
+    switch(v) {
+      case 'PLAYER': return { text: 'PLAYER VERSION', bg: 'bg-black text-white' };
+      case 'MASTER': return { text: 'MASTER VERSION', bg: 'bg-jam-green text-white' };
+      case 'FAN': return { text: 'FAN VERSION', bg: 'bg-gray-100 text-gray-900' };
+      default: return { text: 'JERSEY', bg: 'bg-gray-100 text-gray-900' };
+    }
+  };
+
   const gallery = product.images && product.images.length > 0 ? product.images : [product.image];
   const isOutOfStock = product.status === 'OUT_OF_STOCK';
+  const badge = getVersionBadge(product.version);
 
   const renderStars = (rating: number) => {
     return (
@@ -144,9 +154,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products, siteSe
         <div className="lg:col-span-5 flex flex-col pt-4">
           <div className="mb-10">
             <div className="flex items-center justify-between mb-4">
-               <div className="flex items-center space-x-2">
-                  <span className={`h-1 w-8 rounded-full ${isOutOfStock ? 'bg-gray-400' : 'bg-jam-green'}`}></span>
-                  <span className={`text-[11px] font-black uppercase tracking-[0.2em] ${isOutOfStock ? 'text-gray-400' : 'text-jam-green'}`}>{product.team}</span>
+               <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex items-center space-x-2 mr-2">
+                    <span className={`h-1 w-8 rounded-full ${isOutOfStock ? 'bg-gray-400' : 'bg-jam-green'}`}></span>
+                    <span className={`text-[11px] font-black uppercase tracking-[0.2em] ${isOutOfStock ? 'text-gray-400' : 'text-jam-green'}`}>{product.team}</span>
+                  </div>
+                  <span className={`px-3 py-1 rounded-full text-[8px] font-black tracking-widest uppercase ${badge.bg}`}>
+                    {badge.text}
+                  </span>
                </div>
                {reviews.length > 0 && (
                  <div className="flex items-center space-x-2 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">
