@@ -51,7 +51,12 @@ const Cart: React.FC<CartProps> = ({ cartItems, onRemove, onUpdateQuantity, onCh
               </div>
               
               <div className="flex-grow text-center sm:text-left">
-                <h3 className="text-lg font-black italic uppercase text-gray-900 leading-tight mb-1">{item.productName}</h3>
+                <h3 className="text-lg font-black italic uppercase text-gray-900 leading-tight mb-1">
+                  {item.productName}
+                  <span className="ml-2 inline-block text-[9px] font-black bg-gray-100 text-gray-500 px-2 py-0.5 rounded uppercase tracking-tighter">
+                    {item.version} Ed.
+                  </span>
+                </h3>
                 <div className="flex flex-wrap justify-center sm:justify-start items-center gap-4 mt-1 mb-4">
                   <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Size <span className="text-jam-green ml-1">{item.size}</span></span>
                   <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Price <span className="text-gray-900 ml-1">₹{item.price}</span></span>
