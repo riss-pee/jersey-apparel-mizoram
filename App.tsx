@@ -160,7 +160,8 @@ const App: React.FC = () => {
         price: product.price,
         quantity: quantity,
         image: product.image,
-        size: size
+        size: size,
+        version: product.version
       }];
     });
   };
@@ -210,24 +211,6 @@ const App: React.FC = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#053321] text-[#E8E1D3]">
-        <div className="relative mb-12">
-          <div className="w-24 h-24 border-2 border-[#E8E1D3]/10 rounded-full animate-ping absolute"></div>
-          <div className="w-24 h-24 border-t-2 border-[#E8E1D3] rounded-full animate-spin"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-             <span className="font-black italic text-xs tracking-tighter">JAM</span>
-          </div>
-        </div>
-        <div className="text-center space-y-2">
-          <h2 className="text-xl font-black italic tracking-widest uppercase">Initializing Registry</h2>
-          <p className="text-[10px] font-black text-[#E8E1D3]/40 uppercase tracking-[0.4em]">Connecting to Aizawl Terminal...</p>
-        </div>
-      </div>
-    );
-  }
-
   const renderPage = () => {
     switch (currentPage) {
       case 'home': return <Home products={products} reviews={reviews} heroSlides={heroSlides} onAddToCart={addToCart} onNavigate={setCurrentPage} onProductClick={handleNavigateToProduct} />;
@@ -248,6 +231,24 @@ const App: React.FC = () => {
       default: return <Home products={products} reviews={reviews} heroSlides={heroSlides} onAddToCart={addToCart} onNavigate={setCurrentPage} onProductClick={handleNavigateToProduct} />;
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#053321] text-[#E8E1D3]">
+        <div className="relative mb-12">
+          <div className="w-24 h-24 border-2 border-[#E8E1D3]/10 rounded-full animate-ping absolute"></div>
+          <div className="w-24 h-24 border-t-2 border-[#E8E1D3] rounded-full animate-spin"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+             <span className="font-black italic text-xs tracking-tighter">JAM</span>
+          </div>
+        </div>
+        <div className="text-center space-y-2">
+          <h2 className="text-xl font-black italic tracking-widest uppercase">Initializing Registry</h2>
+          <p className="text-[10px] font-black text-[#E8E1D3]/40 uppercase tracking-[0.4em]">Connecting to Aizawl Terminal...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-green-100 selection:text-jam-green">
