@@ -51,20 +51,16 @@ const Signup: React.FC<SignupProps> = ({ onAuthSuccess, onNavigate }) => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-white">
-      {/* Left Side: Brand Visuals with Logo Background */}
+      {/* Left Side: Brand Visuals */}
       <div className="hidden md:flex md:w-1/2 bg-jam-green relative overflow-hidden items-center justify-center p-12">
-        {/* Logo Background from Assets Folder */}
-        <div 
-          className="absolute inset-0 opacity-5 bg-center bg-no-repeat bg-contain transform scale-125 grayscale brightness-200"
-          style={{ backgroundImage: "url('/assets/logo.png')" }}
-        ></div>
-
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
         </div>
         <div className="relative z-10 text-center text-white space-y-6 max-w-md">
-          <div className="w-40 h-40 bg-white/10 backdrop-blur-xl border border-white/20 rounded-[2rem] flex items-center justify-center mx-auto mb-8 shadow-2xl overflow-hidden p-4">
-             <img src="/assets/logo.png" alt="JAM Logo" className="w-full h-full object-contain" />
+          <div className="w-32 h-32 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+            <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            </svg>
           </div>
           <h1 className="text-4xl lg:text-5xl font-black italic uppercase tracking-tighter leading-tight">
             JOIN THE SQUAD
@@ -79,8 +75,7 @@ const Signup: React.FC<SignupProps> = ({ onAuthSuccess, onNavigate }) => {
       {/* Right Side: Signup Form */}
       <div className="flex-1 flex items-center justify-center p-8 lg:p-24 bg-gray-50/50">
         <div className="max-w-md w-full">
-          <div className="md:hidden text-center mb-10 flex flex-col items-center">
-             <img src="/assets/logo.png" alt="JAM Logo" className="w-16 h-16 mb-4" />
+          <div className="md:hidden text-center mb-10">
              <h2 className="text-2xl font-black italic uppercase text-jam-green tracking-tighter">JERSEY APPAREL MIZORAM</h2>
           </div>
 
