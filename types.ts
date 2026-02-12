@@ -13,6 +13,7 @@ export interface User {
 }
 
 export type ProductStatus = 'AVAILABLE' | 'ON_SALE' | 'OUT_OF_STOCK' | 'DISCONTINUED';
+export type JerseyVersion = 'PLAYER' | 'MASTER' | 'FAN';
 
 export interface Product {
   id: string;
@@ -24,6 +25,7 @@ export interface Product {
   description: string;
   stock: number;
   status: ProductStatus;
+  version: JerseyVersion;
   category: 'PREMIER_LEAGUE' | 'LA_LIGA' | 'SERIE_A' | 'INTERNATIONAL' | 'OTHER';
   sizes: string[];
 }
